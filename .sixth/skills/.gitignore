@@ -1,0 +1,19 @@
+# Python виртуалды ортасы
+venv/
+ENV/
+env/
+bin/
+lib/
+include/
+
+# Buildozer жұмыс файлдары (бұлар өте ауыр және Гитхабқа керек емес)
+.buildozer/
+bin/
+*.spec
+
+# Басқа уақытша файлдар
+__pycache__/
+*.pyc
+.DS_Store
+.idea/
+.vscode/
