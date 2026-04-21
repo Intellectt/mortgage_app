@@ -1,33 +1,33 @@
 name: Build APK
-
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        arch: [armeabi-v7a, arm64-v8a]
+    runs-on: ubuntu-22.04 # Тұрақты нұсқа
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - name: Update buildozer.spec architecture
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python_version: '3.10'
+
+      - name: Install dependencies
         run: |
-          sed -i "s/^android.archs = .*/android.archs = ${{ matrix.arch }}/" buildozer.spec
+          sudo apt update
+          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          pip install --user --upgrade Cython==0.29.33 buildozer virtualenv
 
       - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        with:
-          command: buildozer android debug
+        run: |
+          export PATH=$PATH:$HOME/.local/bin
+          buildozer android debug
+        env:
+          ACCEPT_SDK_LICENSE: 1
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
-          name: apk-${{ matrix.arch }}
+          name: RussianCoin-Build
           path: bin/*.apk

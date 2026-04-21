@@ -1,64 +1,59 @@
 [app]
 
-# Application title
-title = Mortgage App
+# (str) Title of your application
+title = RussianCoin
 
-# Package name
-package.name = mortgageapp
+# (str) Package name
+package.name = russiancoin
 
-# Package domain
-package.domain = org.test
+# (str) Package domain (needed for android packaging)
+package.domain = org.elnur
 
-# Source code location
+# (str) Source code where the main.py live
 source.dir = .
 
-# Files to include
-source.include_exts = py,png,jpg,kv,atlas
+# (list) Source files to include (let empty to include all the files)
+source.include_exts = py,png,jpg,kv,atlas,json
 
-# Version
-version = 0.1
+# (list) Application requirements
+# Керекті кітапханаларды осында қосасың
+requirements = python3,kivy,kivymd,pillow
 
-# Requirements
-requirements = python3,kivy,kivymd
-
-# Orientation
-orientation = portrait
-
-# Fullscreen
-fullscreen = 0
-
-# Android API
-android.api = 31
-
-# Minimum API
-android.minapi = 21
-
-# Android SDK
-android.sdk = 24
-
-# Android NDK
-android.ndk = 23b
-
-# Architecture
-android.archs = armeabi-v7a
-
-# Permissions
+# (str) Custom source folders for requirements
+# (list) Permissions
 android.permissions = INTERNET
 
-# Presplash color
-android.presplash_color = #FFFFFF
+# (int) Target Android API, should be as high as possible.
+android.api = 33
 
-# Enable AndroidX
-android.enable_androidx = True
+# (int) Minimum API your APK will support.
+android.minapi = 21
 
-# Log level
-log_level = 2
+# (str) Android NDK version to use
+android.ndk = 25b
 
-# Warning level
-warn_on_root = 1
+# (bool) If True, then skip trying to update the libs of dists
+android.skip_update = False
 
+# (bool) If True, then copy the whole source dir to the device
+android.copy_libs = 1
+
+# -----------------------------------------------------------------------------
+# АРХИТЕКТУРАЛАРДЫ БАПТАУ (Осы жер маңызды!)
+# -----------------------------------------------------------------------------
+# 32-бит (armeabi-v7a) және 64-бит (arm64-v8a) бірге жиналуы үшін:
+android.archs = armeabi-v7a, arm64-v8a
+
+# (bool) enables Android auto backup
+android.allow_backup = True
+
+# (str) The format used to package the app for release mode (aab or apk)
+# Google Play үшін "aab", тест үшін "apk"
+android.release_artifact = apk
 
 [buildozer]
+# (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
+log_level = 2
 
-# Directory for build output
-bin_dir = ./bin
+# (int) Display warning if buildozer is run as root (0 = off, 1 = on)
+warn_on_root = 1
