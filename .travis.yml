@@ -1,0 +1,30 @@
+dist: focal
+language: python
+python:
+  - "3.8"
+
+services:
+  - docker
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y python3-pip python3-setuptools git zip unzip openjdk-11-jdk
+
+install:
+  - python3 -m pip install --upgrade pip
+  - python3 -m pip install Cython==0.29.33 buildozer
+
+script:
+  # Use 32-bit Android target by default (as in the lesson).
+  - cp buildozer-32bit.spec buildozer.spec
+  - buildozer -v android debug
+  - ls -la bin/
+
+deploy:
+  provider: releases
+  api_key: "${GITHUB_TOKEN}"
+  file_glob: true
+  file: "bin/*-debug.apk"
+  skip_cleanup: true
+  on:
+    all_branches: true
